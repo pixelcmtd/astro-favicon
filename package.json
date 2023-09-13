@@ -1,0 +1,24 @@
+{
+  "name": "astro-favicon",
+  "version": "0.0.1",
+  "description": "An integrated Astro component for favicons.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixelcmtd/astro-favicon.git"
+  },
+  "exports": {
+    ".": "./index.ts"
+  },
+  "files": [
+    "src",
+    "index.ts"
+  ],
+  "devDependencies": {
+    "astro": "^3.0.13"
+  },
+  "peerDependencies": {
+    "astro": "^3.0.0-beta.0"
+  },
+  "license": "MIT"
+}

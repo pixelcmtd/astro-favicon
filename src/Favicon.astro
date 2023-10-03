@@ -3,38 +3,30 @@ import { ImageOutputFormat } from "astro";
 import { getImage } from "astro:assets";
 
 export interface Props {
-    // TODO: consider supporting strings for remote/single-file favicons with a fixed size
-    src: ImageMetadata;
+    src: ImageMetadata | string;
 }
 
 const { src } = Astro.props;
 
 const image = (size: number, format: ImageOutputFormat) =>
     getImage({ src, format, width: size, height: size }).then((x) => x.src);
+
+const sizedIcons = (sizes: number[]) =>
+    Promise.all(sizes.map(async (s) => [s + "x" + s, await image(s, "png")]));
+let favicons =
+    typeof src == "string"
+        ? [[undefined, src]]
+        : await sizedIcons([196, 160, 96, 64, 32, 16]);
+let apples =
+    typeof src == "string"
+        ? [[undefined, src]]
+        : await sizedIcons([57, 114, 72, 144, 60, 120, 76, 152, 180]);
 ---
 
 {
-    await Promise.all(
-        [196, 160, 96, 64, 32, 16].map(async (size) => (
-            <link
-                rel="icon"
-                type="image/png"
-                sizes={size + "x" + size}
-                href={await image(size, "png")}
-            />
-        )),
-    )
+    favicons.map(([sizes, href]) => (
+        <link rel="icon" type="image/png" {sizes} {href} />
+    ))
 }
-{
-    await Promise.all(
-        [57, 114, 72, 144, 60, 120, 76, 152, 180].map(async (size) => (
-            <link
-                rel="apple-touch-icon"
-                type="image/png"
-                sizes={size + "x" + size}
-                href={await image(size, "png")}
-            />
-        )),
-    )
-}
+{apples.map(([sizes, href]) => <link rel="apple-touch-icon" {sizes} {href} />)}
 <meta name="msapplication-TileImage" content={await image(144, "png")} />

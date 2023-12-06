@@ -1,6 +1,6 @@
 {
   "name": "astro-favicon",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "An integrated Astro component for favicons.",
   "type": "module",
   "repository": {
@@ -15,10 +15,10 @@
     "index.ts"
   ],
   "devDependencies": {
-    "astro": "^3.0.13"
+    "astro": "^4.0.0"
   },
   "peerDependencies": {
-    "astro": "^3.0.0-beta.0"
+    "astro": "^4.0.0-beta.0"
   },
   "license": "MIT"
 }
